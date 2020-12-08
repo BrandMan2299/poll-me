@@ -1,0 +1,21 @@
+.header {
+	background-image: url("../images/jumbortonHomePage.png");
+	width: 100%;
+	margin: auto;
+	padding-top: 5%;
+	padding-bottom: 5%;
+}
+
+.container {
+	padding-top: 3%;
+	padding-bottom: 3%;
+}
+
+.popularHeader {
+	text-align: center;
+	padding-bottom: 2%;
+}
+
+.footer {
+	background-image: url("../images/jumbortonHomePage.png");
+}
