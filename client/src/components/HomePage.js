@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './HomePage.css';
+import { Link } from 'react-router-dom';
 
 
 export default function HomePage() {
@@ -14,7 +15,9 @@ export default function HomePage() {
                     and provide analytics to the lecturer!
                 </h4>
                 <p>
-                    <Button variant="info">Make a new Poll</Button>
+                    <Link to="/newpoll">
+                        <Button variant="info">Make a new Poll</Button>
+                    </Link>
                 </p>
             </div>
             <div className="container">

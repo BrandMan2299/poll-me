@@ -2,8 +2,8 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useHistory } from 'react-router-dom';
 import Logo from '../images/Logo.png';
-import { Button } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext.js'
+import './Navbar.css'
 
 
 export default function Navbar() {
@@ -37,7 +37,7 @@ export default function Navbar() {
                         </ul>
                     </div>
                 </div>
-                <Button onClick={handleLogout}>Log Out</Button>
+                <a onClick={handleLogout}>Log Out</a>
             </nav>
         </div>
     )

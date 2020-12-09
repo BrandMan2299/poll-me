@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
 import Signup from './components/Signup';
 import { AuthProvider } from './contexts/AuthContext';
+import NewPoll from './components/NewPoll';
 
 function App() {
   return (
@@ -14,9 +15,10 @@ function App() {
         <AuthProvider>
           <Navbar />
           <Switch>
+            <PrivateRoute path='/' exact component={HomePage} />
+            <PrivateRoute path='/' exact component={NewPoll} />
             <Route path='/signup' exact component={Signup} />
             <Route path='/signin' exact component={Signin} />
-            <PrivateRoute path='/' component={HomePage} />
           </Switch>
         </AuthProvider>
       </BrowserRouter>
