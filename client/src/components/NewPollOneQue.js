@@ -18,11 +18,14 @@ export default function NewPollOneQue(prop) {
         prop.setInputs(newInputs)
     }, [question, answer1, answer2, answer3, answer4])
 
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
     return (
         <div className="form-group">
             <label htmlFor="question">question number {prop.numOfQue}</label>
-            <input type="text" name="question" onChange={e => setQuestion(e.target.value)} className="form-control" id="exampleFormControlInput1" placeholder="Insert Question" />
+            <input type="text" name="question" onChange={e => setQuestion(capitalizeFirstLetter(e.target.value))} className="form-control" id="exampleFormControlInput1" placeholder="Insert Question" />
             <div className="container answers">
                 <div className="row">
                     <div className="col-sm">

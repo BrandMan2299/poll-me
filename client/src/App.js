@@ -7,6 +7,7 @@ import HomePage from './components/HomePage';
 import Signup from './components/Signup';
 import { AuthProvider } from './contexts/AuthContext';
 import NewPoll from './components/NewPoll';
+import OnePoll from './components/OnePoll';
 
 function App() {
   return (

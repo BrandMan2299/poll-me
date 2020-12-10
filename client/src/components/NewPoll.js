@@ -35,10 +35,10 @@ export default function NewPoll() {
     const generate = async () => {
         const finalInput = inputs.slice();
         finalInput.forEach(question => {
-            question.vote1 = 0;
-            question.vote2 = 0;
-            question.vote3 = 0;
-            question.vote4 = 0;
+            question.votes1 = 0;
+            question.votes2 = 0;
+            question.votes3 = 0;
+            question.votes4 = 0;
         })
         const poll = {
             title: pollName.current.value,
