@@ -16,9 +16,10 @@ function App() {
           <Navbar />
           <Switch>
             <PrivateRoute path='/' exact component={HomePage} />
-            <PrivateRoute path='/' exact component={NewPoll} />
+            <PrivateRoute path='/newpoll' exact component={NewPoll} />
             <Route path='/signup' exact component={Signup} />
             <Route path='/signin' exact component={Signin} />
+            {/* <Route path='/poll/:id' exact component={} /> */}
           </Switch>
         </AuthProvider>
       </BrowserRouter>
