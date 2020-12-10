@@ -19,7 +19,7 @@ function App() {
             <PrivateRoute path='/newpoll' exact component={NewPoll} />
             <Route path='/signup' exact component={Signup} />
             <Route path='/signin' exact component={Signin} />
-            {/* <Route path='/poll/:id' exact component={} /> */}
+            <Route path='/poll/:id' exact component={OnePoll} />
           </Switch>
         </AuthProvider>
       </BrowserRouter>

@@ -2,11 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './NewPoll.css'
 import NewPollOneQue from './NewPollOneQue';
+import { useAuth } from '../contexts/AuthContext';
+import axios from 'axios';
 
 
 export default function NewPoll() {
     const [answers, setAnswers] = useState([])
     const [inputs, setInputs] = useState([])
+
+    const pollName = useRef()
+    const pollExplanation = useRef();
+
+    const { currentUser } = useAuth()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -14,7 +21,7 @@ export default function NewPoll() {
     const addQue = () => {
         const temp = answers.slice();
         const newInputs = inputs.slice()
-        newInputs.push({ questionNumber: temp.length + 1 })
+        newInputs.push({})
         temp.push(<NewPollOneQue numOfQue={temp.length + 1} inputs={newInputs} setInputs={setInputs} />)
         setAnswers(temp)
         setInputs(newInputs);
@@ -25,9 +32,24 @@ export default function NewPoll() {
         addQue()
     }, [])
 
-    useEffect(() => {
-        console.log("render");
-    }, [inputs])
+    const generate = async () => {
+        const finalInput = inputs.slice();
+        finalInput.forEach(question => {
+            question.vote1 = 0;
+            question.vote2 = 0;
+            question.vote3 = 0;
+            question.vote4 = 0;
+        })
+        const poll = {
+            title: pollName.current.value,
+            explanation: pollExplanation.current.value,
+            creator: currentUser.email,
+            questions: finalInput,
+            date: new Date()
+        }
+        const { data } = await axios.post("/api/polls", poll);
+        alert(`The URL to The Poll is = http://localhost:3000/poll/${data}`)
+    }
 
 
     return (
@@ -35,10 +57,10 @@ export default function NewPoll() {
             <div className="card new-poll-card" width="18rem;">
                 <div className="card-body">
                     <h2 htmlFor="header">Poll Name</h2>
-                    <textarea className="poll-name" placeholder="Insert Poll Name" />
+                    <textarea className="poll-name" ref={pollName} placeholder="Insert Poll Name" />
                     <br />
                     <h5 htmlFor="header">Poll Explaination</h5>
-                    <textarea className="poll-explaination" placeholder="Insert Explaination" />
+                    <textarea className="poll-explaination" ref={pollExplanation} placeholder="Insert Explaination" />
                 </div>
                 <form onSubmit={handleSubmit} className="form-questions">
                     <div id="answersSection" >
@@ -46,7 +68,7 @@ export default function NewPoll() {
                     </div>
                     <a onClick={addQue}>Add Question</a>
                     <br />
-                    <button className="btn btn-info btn-md new-poll-btn">Generate</button>
+                    <button onClick={generate} className="btn btn-info btn-md new-poll-btn">Generate</button>
                 </form>
             </div>
         </div>

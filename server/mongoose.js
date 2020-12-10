@@ -11,32 +11,30 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASS
 
 const pollSchema = {
     title: String,
+    explanation: String,
     creator: String,
     date: Date,
     questions: [
         {
-            content: String,
-            answers: [
-                {
-                    content: String,
-                    howMany: Number
-                }
-            ]
+            question: String,
+            answer1: String,
+            votes1: Number,
+            answer2: String,
+            votes2: Number,
+            answer3: String,
+            votes3: Number,
+            answer4: String,
+            votes4: Number,
         }
     ]
 }
 
-const userSchema = {
-    email: String
-}
+// const userSchema = {
+//     email: String
+// }
 
-const adminSchema = {
-    userName: String,
-    email: String,
-    password: String
-}
 
 const Poll = mongoose.model('Poll', pollSchema);
-const User = mongoose.model('User', userSchema);
-const Admin = mongoose.model('Admin', adminSchema);
+// const User = mongoose.model('User', userSchema);
 
+module.exports = Poll;
