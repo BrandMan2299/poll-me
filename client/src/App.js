@@ -8,6 +8,7 @@ import Signup from './components/Signup';
 import { AuthProvider } from './contexts/AuthContext';
 import NewPoll from './components/NewPoll';
 import OnePoll from './components/OnePoll';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Switch>
             <PrivateRoute path='/' exact component={HomePage} />
             <PrivateRoute path='/newpoll' exact component={NewPoll} />
+            <PrivateRoute path='/dashboard/:id' exact component={Dashboard} />
             <Route path='/signup' exact component={Signup} />
             <Route path='/signin' exact component={Signin} />
             <Route path='/poll/:id' exact component={OnePoll} />

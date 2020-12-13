@@ -12,19 +12,17 @@ router.post('/', async (req, res) => {
     res.json(id)
 })
 
-router.get('/admin/:id', async (req, res) => {
-    const data = await Poll.findOne({ _id: req.params.id });
-    res.json(data);
-})
-
 router.route('/:id')
     .get(async (req, res) => {
         const data = await Poll.findOne({ _id: req.params.id });
-        data.questions.forEach(q => {
-            q.votes1 = 0;
-            q.votes2 = 0;
-            q.votes3 = 0;
-            q.votes4 = 0;
+        data.questions = data.questions.map(q => {
+            return {
+                question: q.question,
+                answer1: q.answer1,
+                answer2: q.answer2,
+                answer3: q.answer3,
+                answer4: q.answer4,
+            }
         })
         res.json(data);
     })
@@ -37,6 +35,11 @@ router.route('/:id')
         });
         await Poll.updateOne({ _id: poll._id }, poll)
         res.json("good")
-    })
+    });
+
+router.get('/results/:id', async (req, res) => {
+    const poll = await Poll.findOne({ _id: req.params.id });
+    res.json(poll);
+});
 
 module.exports = router
