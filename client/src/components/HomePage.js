@@ -1,75 +1,73 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './HomePage.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth } from "../contexts/AuthContext";
+
 
 
 export default function HomePage() {
-    return (
+    const [lastPolls, setLastPolls] = useState([])
+
+    const { currentUser } = useAuth()
+
+    useEffect(() => {
+        (async () => {
+            const { data } = await axios.post(`/api/polls/user/history`, {
+                creator: currentUser.email
+            })
+            setLastPolls(data)
+            console.log(data);
+        })()
+    }, [])
+
+
+    return lastPolls ? (
         <div className="homePage-body">
             <div className="header text-center" >
-                <h1>Poll Me</h1>
+                <h1>PollMe</h1>
                 <h4>
                     PollMe is a Live Poll app that keeps the students engaged,
                     and provide analytics to the lecturer!
                 </h4>
                 <p>
-                    <Link to="/newpoll">
+                    <Link to='/newpoll'>
                         <Button variant="info">Make a new Poll</Button>
                     </Link>
                 </p>
             </div>
             <div className="container">
-                <h3 className="popularHeader">Popular Polls</h3>
+                <h3 className="popularHeader">My Last Polls</h3>
                 <div className="row">
-                    <div className="col-md-4">
-                        <div className="card mb-4 shadow-sm">
-                            <div className="card-body">
-                                <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <div className="d-flex justify-content-between align-items-center">
-                                    <div className="btn-group">
-                                        <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                                        <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
+                    {lastPolls.map(pollPreview => {
+                        return (
+                            <div className="col-md-4">
+                                <div className="card mb-4 shadow-sm">
+                                    <div className="card-body">
+                                        <h5 class="card-title">{pollPreview.title}</h5>
+                                        <p className="card-text">{pollPreview.explanation}</p>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div className="btn-group">
+                                                <Link to={`/dashboard/${pollPreview._id}`}>
+                                                    <button type="button" className="btn btn-sm btn-outline-secondary">View Dashboard</button>
+                                                </Link>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div class="card-footer text-muted">{new Date(pollPreview.date).toUTCString()}</div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="col-md-4">
-                        <div className="card mb-4 shadow-sm">
-                            <div className="card-body">
-                                <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <div className="d-flex justify-content-between align-items-center">
-                                    <div className="btn-group">
-                                        <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                                        <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-4">
-                        <div className="card mb-4 shadow-sm">
-                            <div className="card-body">
-                                <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <div className="d-flex justify-content-between align-items-center">
-                                    <div className="btn-group">
-                                        <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                                        <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        )
+                    })}
                 </div>
             </div>
             <footer className="footer text-muted">
-                <div className="container">
-                    <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-                    <p>New to Bootstrap? <a href="https://getbootstrap.com/">Visit the homepage</a> or read our <a href="../getting-started/introduction/">getting started guide</a>.</p>
+                <div className="container footer-container">
+                    <p> &copy; PollMe made by Eran Dahan and Itai Brand</p>
                 </div>
             </footer>
         </div>
-    )
+    ) : <></>
 }

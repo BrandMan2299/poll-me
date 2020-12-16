@@ -12,6 +12,25 @@ router.post('/', async (req, res) => {
     res.json(id)
 })
 
+
+router.get('/results/:id', async (req, res) => {
+    const poll = await Poll.findOne({ _id: req.params.id });
+    res.json(poll);
+});
+
+router.post('/user/history', async (req, res) => {
+    const polls = await Poll.find({ creator: req.body.creator }, null, { limit: 3, sort: { date: 'desc' } });
+    const parsedPolls = polls.map(poll => {
+        return {
+            title: poll.title,
+            explanation: poll.explanation,
+            date: poll.date,
+            _id: poll._id
+        }
+    })
+    res.json(parsedPolls);
+});
+
 router.route('/:id')
     .get(async (req, res) => {
         const data = await Poll.findOne({ _id: req.params.id });
@@ -36,10 +55,4 @@ router.route('/:id')
         await Poll.updateOne({ _id: poll._id }, poll)
         res.json("good")
     });
-
-router.get('/results/:id', async (req, res) => {
-    const poll = await Poll.findOne({ _id: req.params.id });
-    res.json(poll);
-});
-
 module.exports = router

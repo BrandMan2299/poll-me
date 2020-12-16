@@ -30,8 +30,8 @@ export default function Navbar() {
                         <Link className="nav-link" to="/newpoll">
                             <li className="nav-item">New Poll</li>
                         </Link>
-                        <Link className="nav-link" to="/history">
-                            <li className="nav-item">History</li>
+                        <Link className="nav-link" to="/mypolls">
+                            <li className="nav-item">My Polls</li>
                         </Link>
                     </ul>
                 </div>

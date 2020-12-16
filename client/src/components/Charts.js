@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { PieChart, Pie, BarChart, Bar, Tooltip, Cell, Legend, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, BarChart, Bar, Tooltip, ResponsiveContainer, Cell, Legend, CartesianGrid, XAxis, YAxis } from 'recharts';
 
 export default function Charts({ question }) {
     const [data, setData] = useState([]);
-    const colors = ["#696969", "#ADD8E6", "#20B2AA", "#008080"]
+    const colors = ["#a0e1db", "#8dd5ff", "#ace49d", "#88d496"]
 
     useEffect(() => {
         const array = []
@@ -28,24 +28,26 @@ export default function Charts({ question }) {
 
     return (
         <div style={{ display: "flex" }}>
-            <ResponsiveContainer width="50%" height={400}>
-                <BarChart width={400} height={10} data={data}>
+            <ResponsiveContainer width="50%" height={250}>
+                <BarChart data={data}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <YAxis />
                     <XAxis dataKey="answer" />
-                    <Bar dataKey="votes" fill="#5F9EA0" />
-                    <Legend />
+                    <YAxis dataKey="votes" />
                     <Tooltip />
+                    <Legend wrapperStyle={{ bottom: 0, left: 25 }} />
+                    <Bar dataKey="votes" fill="#a0e1db" />
                 </BarChart>
             </ResponsiveContainer>
-            <ResponsiveContainer width="50%" height={400}>
-                <PieChart width={400} height={250}>
+            <ResponsiveContainer width="50%" height={250}>
+                <PieChart >
                     <Tooltip />
                     <Legend />
                     <Pie data={data} dataKey="votes" nameKey="answer" cx="50%" cy="50%" outerRadius={50} fill="#8884d8" >
-                        {data.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={colors[index]} />
-                        ))}
+                        {
+                            data.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={colors[index]} />
+                            ))
+                        }
                     </Pie>
                 </PieChart>
             </ResponsiveContainer>

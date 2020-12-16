@@ -29,12 +29,6 @@ const pollSchema = {
     ]
 }
 
-// const userSchema = {
-//     email: String
-// }
-
-
 const Poll = mongoose.model('Poll', pollSchema);
-// const User = mongoose.model('User', userSchema);
 
 module.exports = Poll;
