@@ -2,34 +2,41 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useParams } from 'react-router-dom';
+import { Modal } from 'react-bootstrap';
 import './OnePoll.css';
 import Logo from '../images/Logo.png';
 import { Link } from 'react-router-dom';
 
 export default function OnePoll() {
     const [onePoll, setOnePoll] = useState();
+    const [show, setShow] = useState(false);
+    const [modalBody, setModalBody] = useState("");
     const { id } = useParams();
+    const [inputs, setInputs] = useState([]);
+    const handleClose = () => setShow(false);
+    const handleShow = () => { setShow(true) };
 
-    const inputs = [];
-    console.log("render");
     const pickAnswer = (e) => {
-        inputs[e.target.name] = e.target.value;
+        const votes = inputs.slice();
+        votes[e.target.name] = e.target.value;
+        setInputs(votes);
     }
 
     const submit = async () => {
         if (inputs.length === onePoll.questions.length && !inputs.includes(undefined)) {
             await axios.post(`/api/polls/${id}`, inputs);
-            alert("tou did good")
+            setModalBody("Great Job! Thank you for your input");
+            handleShow()
         }
         else {
-            alert("finish him")
+            setModalBody("Please Finish Answer All The Questions!");
+            handleShow()
         }
     }
 
     useEffect(async () => {
         const { data } = await axios.get(`/api/polls/${id}`);
         setOnePoll(data);
-        console.log(data);
     }, [])
 
     return onePoll ? (
@@ -92,6 +99,12 @@ export default function OnePoll() {
                     <p> &copy; PollMe made by Eran Dahan and Itai Brand</p>
                 </div>
             </div>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Hey You</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{modalBody}</Modal.Body>
+            </Modal>
         </div>
     ) : <></>
 }

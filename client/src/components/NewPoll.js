@@ -1,23 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Modal } from 'react-bootstrap';
 import './NewPoll.css'
 import NewPollOneQue from './NewPollOneQue';
 import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
 export default function NewPoll() {
     const [answers, setAnswers] = useState([])
     const [inputs, setInputs] = useState([])
+    const [show, setShow] = useState(false);
+    const [url, setUrl] = useState()
 
     const pollName = useRef()
     const pollExplanation = useRef();
 
     const { currentUser } = useAuth()
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const handleSubmit = (e) => {
         e.preventDefault()
     }
+
     const addQue = () => {
         const temp = answers.slice();
         const newInputs = inputs.slice()
@@ -26,7 +33,6 @@ export default function NewPoll() {
         setAnswers(temp)
         setInputs(newInputs);
     }
-
 
     useEffect(() => {
         addQue()
@@ -48,9 +54,9 @@ export default function NewPoll() {
             date: new Date()
         }
         const { data } = await axios.post("/api/polls", poll);
-        alert(`The URL to The Poll is = http://localhost:3000/poll/${data}`)
+        setUrl(data)
+        handleShow()
     }
-
 
     return (
         <div className="new-poll-body">
@@ -71,6 +77,19 @@ export default function NewPoll() {
                     <button onClick={generate} className="btn btn-info btn-md new-poll-btn">Generate</button>
                 </form>
             </div>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Poll URL</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Woohoo, you're poll URL is {`http://localhost:3000/poll/${url}`}</Modal.Body>
+                <Modal.Footer>
+                    <Link to={`/dashboard/${url}`}>
+                        <Button variant="info" onClick={handleClose}>
+                            Go To Dashboard
+                        </Button>
+                    </Link>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }

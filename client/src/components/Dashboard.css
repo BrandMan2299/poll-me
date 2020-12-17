@@ -21,13 +21,15 @@
 
 .grid-container {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
-	grid-template-rows: 1fr 1fr 1fr;
-	gap: 0px 0px;
+	margin-top: 50px;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	gap: 50px 0px;
 	grid-template-areas:
-		"details details preview preview"
-		"carusel carusel preview preview"
-		"carusel carusel preview preview";
+		"details  preview "
+		"carusel  preview ";
+	min-height: 60vh;
+	max-height: 84vh;
 }
 .preview {
 	grid-area: preview;
@@ -43,6 +45,7 @@
 }
 .details {
 	grid-area: details;
+	height: 200px;
 }
 
 .carousel-control-prev-icon,
@@ -50,7 +53,6 @@
 	height: 100px;
 	width: 100px;
 	outline: black;
-	/* background-size: 20%, 20%; */
 	border-radius: 50%;
 	background-image: none;
 }

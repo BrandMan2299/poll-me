@@ -12,23 +12,15 @@ router.post('/', async (req, res) => {
     res.json(id)
 })
 
-
-router.get('/results/:id', async (req, res) => {
+router.post('/results/:id', async (req, res) => {
+    const { creator } = req.body;
     const poll = await Poll.findOne({ _id: req.params.id });
-    res.json(poll);
-});
-
-router.post('/user/history', async (req, res) => {
-    const polls = await Poll.find({ creator: req.body.creator }, null, { limit: 3, sort: { date: 'desc' } });
-    const parsedPolls = polls.map(poll => {
-        return {
-            title: poll.title,
-            explanation: poll.explanation,
-            date: poll.date,
-            _id: poll._id
-        }
-    })
-    res.json(parsedPolls);
+    if (creator === poll.creator) {
+        res.json(poll);
+    }
+    else {
+        res.json({ error: "stop messing around" })
+    }
 });
 
 router.route('/:id')
