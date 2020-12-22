@@ -4,44 +4,47 @@ import { Button, Modal } from 'react-bootstrap';
 import './NewPoll.css'
 import NewPollOneQue from './NewPollOneQue';
 import { useAuth } from '../contexts/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
-
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export default function NewPoll() {
-    const [answers, setAnswers] = useState([])
-    const [inputs, setInputs] = useState([])
+    const [inputs, setInputs] = useState([]);
     const [show, setShow] = useState(false);
-    const [url, setUrl] = useState()
+    const [url, setUrl] = useState();
+    const history = useHistory();
 
-    const pollName = useRef()
+    const pollName = useRef();
     const pollExplanation = useRef();
 
-    const { currentUser } = useAuth()
-    const handleClose = () => setShow(false);
+    const { currentUser } = useAuth();
+
+    const handleClose = () => {
+        setShow(false);
+        history.push('/');
+    };
     const handleShow = () => setShow(true);
 
     const handleSubmit = (e) => {
         e.preventDefault()
-    }
+    };
 
     const removeQue = (index) => {
-        const newAnswers = answers.slice();
         const newInputs = inputs.slice();
-        console.log(newInputs.slice());
-        newAnswers.splice(index, 1);
         newInputs.splice(index, 1);
-        console.log(newInputs);
-        setAnswers(newAnswers);
         setInputs(newInputs);
     }
 
     const addQue = () => {
-        const newAnswers = answers.slice();
-        const newInputs = inputs.slice()
-        newInputs.push({})
-        newAnswers.push({ numOfQue: newAnswers.length + 1 })
-        setAnswers(newAnswers)
+        const newInputs = inputs.slice();
+        const newQuestion = {
+            question: "",
+            answer1: "",
+            answer2: "",
+            answer3: "",
+            answer4: "",
+        }
+        newInputs.push(newQuestion)
         setInputs(newInputs);
     }
 
@@ -81,8 +84,8 @@ export default function NewPoll() {
                 </div>
                 <form onSubmit={handleSubmit} className="form-questions">
                     <div id="answersSection" >
-                        {answers.map((a, index) => {
-                            return <NewPollOneQue numOfQue={a.numOfQue} inputs={inputs} setInputs={setInputs} removeQue={() => { removeQue(index) }} />
+                        {inputs.map((a, index) => {
+                            return <NewPollOneQue index={index} inputs={inputs} setInputs={setInputs} removeQue={() => { removeQue(index) }} />
                         })}
                     </div>
                     <a onClick={addQue}>Add Question</a>
@@ -95,6 +98,9 @@ export default function NewPoll() {
                     <Modal.Title>Poll URL</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Woohoo, you're poll URL is {`http://localhost:3000/poll/${url}`}</Modal.Body>
+                <CopyToClipboard text={`http://localhost:3000/poll/${url}`}>
+                    <Button variant="light" onClick={e => e.target.innerText = "Copied!"}>Copy</Button>
+                </CopyToClipboard>
                 <Modal.Footer>
                     <Link to={`/dashboard/${url}`}>
                         <Button variant="info" onClick={handleClose}>

@@ -66,30 +66,15 @@ export default function OnePoll() {
                                     <span className="input-group-text" id="basic-addon1">{index + 1}. {question.question}</span>
                                     <label ></label><br />
                                     <div className="row">
-                                        <div className="col-sm">
-                                            <div className="input-group mb-3">
-                                                <input type="radio" id={question._id + "1"} name={index} value="1" onChange={pickAnswer} />
-                                                <label htmlFor={question._id + "1"} >1. {question.answer1}</label><br />
-                                            </div>
-                                        </div>
-                                        <div className="col-sm">
-                                            <div className="input-group mb-3">
-                                                <input type="radio" id={question._id + "2"} name={index} value="2" onChange={pickAnswer} />
-                                                <label htmlFor={question._id + "2"}>2. {question.answer2}</label><br />
-                                            </div>
-                                        </div>
-                                        <div className="col-sm">
-                                            <div className="input-group mb-3">
-                                                <input type="radio" id={question._id + "3"} name={index} value="3" onChange={pickAnswer} />
-                                                <div htmlFor={question._id + "3"}>3. {question.answer3}</div>
-                                            </div>
-                                        </div>
-                                        <div className="col-sm">
-                                            <div className="input-group mb-3">
-                                                <input type="radio" id={question._id + "4"} name={index} value="4" onChange={pickAnswer} />
-                                                <label htmlFor={question._id + "4"}>4. {question.answer4}</label>
-                                            </div>
-                                        </div>
+                                        {Object.keys(question).filter(key => key.includes('answer')).map((key, i) => {
+                                            return question[key] !== "" && (
+                                                <div className="col-sm">
+                                                    <div className="input-group mb-3">
+                                                        <input type="radio" id={question._id + "1"} name={index} value={i + 1} onChange={pickAnswer} />
+                                                        <label htmlFor={question._id + "1"} >{`${i + 1}`}. {question[key]}</label><br />
+                                                    </div>
+                                                </div>)
+                                        })}
                                     </div>
                                 </div>
                             )

@@ -18,7 +18,7 @@ router.post('/history/recent', async (req, res) => {
 });
 
 router.post('/history/all', async (req, res) => {
-    const polls = await Poll.find({ creator: req.body.creator });
+    const polls = await Poll.find({ creator: req.body.creator }, null, { sort: { date: 'desc' } });
     const parsedPolls = polls.map(poll => {
         return {
             title: poll.title,

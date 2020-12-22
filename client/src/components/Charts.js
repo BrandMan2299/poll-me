@@ -6,22 +6,11 @@ export default function Charts({ question }) {
     const colors = ["#a0e1db", "#8dd5ff", "#ace49d", "#88d496"]
 
     useEffect(() => {
-        const array = []
-        array.push({
-            answer: question.answer1,
-            votes: question.votes1
-        })
-        array.push({
-            answer: question.answer2,
-            votes: question.votes2
-        })
-        array.push({
-            answer: question.answer3,
-            votes: question.votes3
-        })
-        array.push({
-            answer: question.answer4,
-            votes: question.votes4
+        const array = Object.keys(question).filter(key => key.includes('answer')).map((key, i) => {
+            return {
+                answer: question[`answer${i + 1}`],
+                votes: question[`votes${i + 1}`]
+            }
         })
         setData(array);
     }, [])
