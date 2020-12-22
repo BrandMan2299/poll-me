@@ -59,6 +59,7 @@ export default function NewPoll() {
             question.votes2 = 0;
             question.votes3 = 0;
             question.votes4 = 0;
+            question.openReplies = [];
         })
         const poll = {
             title: pollName.current.value,

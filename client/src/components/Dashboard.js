@@ -24,7 +24,7 @@ export default function Dashboard() {
     return results ? (
         !results.error ? (
             <div className="dashboard-body">
-                <div className="card new-dashboard-card" width="18rem;">
+                <div className="card new-dashboard-card">
                     <h1 className="dashboard-header">Poll Dashboard</h1>
                     <div className="grid-container">
                         <div className="preview">
@@ -54,12 +54,29 @@ export default function Dashboard() {
                         <div className="carusela">
                             <Carousel className="carousel">
                                 {results && results.questions.map(q => {
-                                    return (
-                                        <Carousel.Item>
-                                            <h3 className="carousel-header">Question: {q.question}</h3>
-                                            <Charts question={q} />
-                                        </Carousel.Item>
-                                    )
+                                    if (q.answer1 !== "") {
+                                        return (
+                                            <Carousel.Item>
+                                                <h3 className="carousel-header" style={{ marginTop: "10px" }}>Question: {q.question}</h3>
+                                                <Charts question={q} />
+                                            </Carousel.Item>
+                                        )
+                                    } else {
+                                        return (
+                                            <Carousel.Item style={{ minHeight: "291px" }}>
+                                                <div className="container answers preview-container" style={{ marginLeft: "50px" }}>
+                                                    <h3 className="carousel-header" style={{ marginTop: "10px" }}>Question: {q.question}</h3>
+                                                    <ul>
+                                                        {q.openReplies.map(answer => {
+                                                            return (
+                                                                <li>{answer}</li>
+                                                            )
+                                                        })}
+                                                    </ul>
+                                                </div>
+                                            </Carousel.Item>
+                                        )
+                                    }
                                 })}
                             </Carousel>
                         </div>

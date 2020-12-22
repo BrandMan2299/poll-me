@@ -25,7 +25,7 @@ const pollSchema = {
             votes3: Number,
             answer4: String,
             votes4: Number,
-            // openAnswers: [String]
+            openReplies: [String]
         }
     ]
 }

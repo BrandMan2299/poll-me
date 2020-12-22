@@ -13,13 +13,15 @@ export default function OnePoll() {
     const [modalBody, setModalBody] = useState("");
     const { id } = useParams();
     const [inputs, setInputs] = useState([]);
+
+    const handleShow = () => { setShow(true) };
     const handleClose = () => {
         setShow(false);
         if (localStorage[`fulfill-${id}`] === "true") {
             history.push('/');
         }
     };
-    const handleShow = () => { setShow(true) };
+
     const history = useHistory();
 
     const pickAnswer = (e) => {
@@ -66,15 +68,19 @@ export default function OnePoll() {
                                     <span className="input-group-text" id="basic-addon1">{index + 1}. {question.question}</span>
                                     <label ></label><br />
                                     <div className="row">
-                                        {Object.keys(question).filter(key => key.includes('answer')).map((key, i) => {
-                                            return question[key] !== "" && (
-                                                <div className="col-sm">
-                                                    <div className="input-group mb-3">
-                                                        <input type="radio" id={question._id + "1"} name={index} value={i + 1} onChange={pickAnswer} />
-                                                        <label htmlFor={question._id + "1"} >{`${i + 1}`}. {question[key]}</label><br />
+                                        {Object.keys(question).filter(key => key.includes('answer')).every(key => question[key] === "") ?
+                                            <input type="text" name={index} className="form-control" placeholder="Answer" aria-label="Username" aria-describedby="basic-addon1" onChange={pickAnswer} /> :
+                                            Object.keys(question).filter(key => key.includes('answer')).map((key, i) => {
+                                                return question[key] !== "" && (
+                                                    <div className="col-sm">
+                                                        <div className="input-group mb-3">
+                                                            <input type="radio" id={question._id + "1"} name={index} value={i + 1} onChange={pickAnswer} />
+                                                            <label htmlFor={question._id + "1"} >{`${i + 1}`}. {question[key]}</label><br />
+                                                        </div>
                                                     </div>
-                                                </div>)
-                                        })}
+                                                )
+                                            })
+                                        }
                                     </div>
                                 </div>
                             )

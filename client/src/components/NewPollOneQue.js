@@ -38,7 +38,10 @@ export default function NewPollOneQue(prop) {
         newInputs[prop.index].question = question;
         answers.forEach((string, i) => {
             newInputs[prop.index][`answer${i + 1}`] = string;
-        })
+        });
+        for (let i = answers.length; i < 4; i++) {
+            newInputs[prop.index][`answer${i + 1}`] = "";
+        }
         prop.setInputs(newInputs)
     }, [question, answers])
 

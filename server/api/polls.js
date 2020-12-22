@@ -41,8 +41,13 @@ router.route('/:id')
         const data = req.body;
         const poll = await Poll.findOne({ _id: req.params.id });
         data.forEach((answer, index) => {
-            const numberVote = `votes${answer}`;
-            poll.questions[index][numberVote]++;
+            if (!isNaN(answer)) {
+                const numberVote = `votes${answer}`;
+                poll.questions[index][numberVote]++;
+            }
+            else {
+                poll.questions[index].openReplies.push(answer)
+            }
         });
         await Poll.updateOne({ _id: poll._id }, poll)
         res.json("good")
