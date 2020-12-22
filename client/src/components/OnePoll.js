@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import './OnePoll.css';
 import Logo from '../images/Logo.png';
@@ -13,8 +13,14 @@ export default function OnePoll() {
     const [modalBody, setModalBody] = useState("");
     const { id } = useParams();
     const [inputs, setInputs] = useState([]);
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        if (localStorage[`fulfill-${id}`] === "true") {
+            history.push('/');
+        }
+    };
     const handleShow = () => { setShow(true) };
+    const history = useHistory();
 
     const pickAnswer = (e) => {
         const votes = inputs.slice();
@@ -25,7 +31,8 @@ export default function OnePoll() {
     const submit = async () => {
         if (inputs.length === onePoll.questions.length && !inputs.includes(undefined)) {
             await axios.post(`/api/polls/${id}`, inputs);
-            setModalBody("Great Job! Thank you for your input");
+            setModalBody("Great Job! Thank you for your input!");
+            localStorage.setItem(`fulfill-${onePoll._id}`, "true");
             handleShow()
         }
         else {
@@ -37,9 +44,13 @@ export default function OnePoll() {
     useEffect(async () => {
         const { data } = await axios.get(`/api/polls/${id}`);
         setOnePoll(data);
+        if (localStorage[`fulfill-${id}`] === "true") {
+            setModalBody("You Can't fill out the Poll twice!");
+            handleShow();
+        }
     }, [])
 
-    return onePoll ? (
+    return onePoll && localStorage.fulfill == undefined ? (
         <div>
             <div className="one-poll-body">
                 <div className="card new-poll-card" width="18rem;">
@@ -106,5 +117,12 @@ export default function OnePoll() {
                 <Modal.Body>{modalBody}</Modal.Body>
             </Modal>
         </div>
-    ) : <></>
+    ) : <>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Hey You</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{modalBody}</Modal.Body>
+            </Modal>
+        </>
 }

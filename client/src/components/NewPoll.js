@@ -25,12 +25,23 @@ export default function NewPoll() {
         e.preventDefault()
     }
 
+    const removeQue = (index) => {
+        const newAnswers = answers.slice();
+        const newInputs = inputs.slice();
+        console.log(newInputs.slice());
+        newAnswers.splice(index, 1);
+        newInputs.splice(index, 1);
+        console.log(newInputs);
+        setAnswers(newAnswers);
+        setInputs(newInputs);
+    }
+
     const addQue = () => {
-        const temp = answers.slice();
+        const newAnswers = answers.slice();
         const newInputs = inputs.slice()
         newInputs.push({})
-        temp.push(<NewPollOneQue numOfQue={temp.length + 1} inputs={newInputs} setInputs={setInputs} />)
-        setAnswers(temp)
+        newAnswers.push({ numOfQue: newAnswers.length + 1 })
+        setAnswers(newAnswers)
         setInputs(newInputs);
     }
 
@@ -70,7 +81,9 @@ export default function NewPoll() {
                 </div>
                 <form onSubmit={handleSubmit} className="form-questions">
                     <div id="answersSection" >
-                        {answers}
+                        {answers.map((a, index) => {
+                            return <NewPollOneQue numOfQue={a.numOfQue} inputs={inputs} setInputs={setInputs} removeQue={() => { removeQue(index) }} />
+                        })}
                     </div>
                     <a onClick={addQue}>Add Question</a>
                     <br />

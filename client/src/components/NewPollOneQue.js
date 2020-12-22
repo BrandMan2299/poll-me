@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { BsTrash } from 'react-icons/bs';
+
 
 export default function NewPollOneQue(prop) {
 
@@ -24,7 +26,7 @@ export default function NewPollOneQue(prop) {
 
     return (
         <div className="form-group">
-            <label htmlFor="question">question number {prop.numOfQue}</label>
+            <label htmlFor="question">question number {prop.numOfQue}</label><BsTrash onClick={prop.removeQue} />
             <input type="text" name="question" onChange={e => setQuestion(capitalizeFirstLetter(e.target.value))} className="form-control" id="exampleFormControlInput1" placeholder="Insert Question" />
             <div className="container answers">
                 <div className="row">
