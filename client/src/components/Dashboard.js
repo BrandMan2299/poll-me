@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import './Dashboard.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import { Carousel, Button } from 'react-bootstrap';
-import Charts from './Charts.js';
-import { useAuth } from '../contexts/AuthContext.js';
+import { Button, Carousel } from 'react-bootstrap';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import Charts from './Charts.js';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Dashboard() {
     const [results, setResults] = useState();
@@ -16,7 +16,6 @@ export default function Dashboard() {
     useEffect(() => {
         (async () => {
             const { data } = await axios.post(`/api/polls/results/${id}`, { creator: currentUser.email })
-            console.log(data);
             setResults(data)
         })()
     }, [])
@@ -51,7 +50,7 @@ export default function Dashboard() {
                                 )
                             })}
                         </div>
-                        <div className="carusela">
+                        <div className="carusela" style={{ marginTop: "10%" }}>
                             <Carousel className="carousel">
                                 {results && results.questions.map(q => {
                                     if (q.answer1 !== "") {
@@ -79,23 +78,23 @@ export default function Dashboard() {
                                     }
                                 })}
                             </Carousel>
+
                         </div>
-                        <div className="card details" style={{ marginLeft: "10px" }}>
+                        <div className="details card" style={{ marginLeft: "10px", marginBottom: "3%" }}>
                             <div className="card-header" style={{ textAlign: "center" }}>Details!</div>
                             <ul className="list-group list-group-flush">
-                                <li className="list-group-item"><b>Poll URL:</b> {`http://localhost:3000/poll/${results._id}`}<span>   </span>
-                                    <CopyToClipboard text={`http://localhost:3000/poll/${id}`}>
+                                <li className="list-group-item"><b>Poll URL:</b>  {`http://localhost:3000/poll/${results._id}`}<span>   </span>
+                                    <CopyToClipboard text={`http://localhost:3000/poll/${results._id}`}>
                                         <Button variant="light" onClick={e => e.target.innerText = "Copied!"}>Copy</Button>
-                                    </CopyToClipboard></li>
-                                <li className="list-group-item"><b>Created At:</b> {new Date(results.date).toUTCString()}</li>
-                                <li className="list-group-item"><b>Voted:</b> {results.questions[0].votes1 + results.questions[0].votes2 + results.questions[0].votes3 + results.questions[0].votes4}</li>
+                                    </CopyToClipboard>
+                                </li>
+                                <li className="list-group-item"><b>Created At:</b>  {new Date(results.date).toUTCString()}</li>
+                                <li className="list-group-item"><b>Voted: </b> {results.questions[0].votes1 + results.questions[0].votes2 + results.questions[0].votes3 + results.questions[0].votes4}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        ) :
-            <div>
-                this is not your poll...
-            </div>) : <div></div>
+        ) : <div>This is Not Your Poll!</div>
+    ) : <div></div>
 }
