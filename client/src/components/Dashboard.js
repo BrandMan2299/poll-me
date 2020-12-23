@@ -7,24 +7,32 @@ import { Button, Carousel } from 'react-bootstrap';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Charts from './Charts.js';
 import { useAuth } from '../contexts/AuthContext';
+import { MdRefresh, MdSentimentSatisfied } from 'react-icons/md';
+
 
 export default function Dashboard() {
     const [results, setResults] = useState();
     const { id } = useParams();
     const { currentUser } = useAuth();
+    const [refresh, setRefresh] = useState(true);
 
     useEffect(() => {
         (async () => {
-            const { data } = await axios.post(`/api/polls/results/${id}`, { creator: currentUser.email })
-            setResults(data)
+            if (refresh === true) {
+                const { data } = await axios.post(`/api/polls/results/${id}`, { creator: currentUser.email })
+                setResults()
+                setResults(data)
+                setRefresh(false)
+            }
         })()
-    }, [])
+    }, [refresh])
+
 
     return results ? (
         !results.error ? (
             <div className="dashboard-body">
                 <div className="card new-dashboard-card">
-                    <h1 className="dashboard-header">Poll Dashboard</h1>
+                    <h1 className="dashboard-header">Poll Dashboard  <MdRefresh cursor="pointer" onClick={() => setRefresh(true)} /></h1>
                     <div className="grid-container">
                         <div className="preview">
                             <h2>{results.title}</h2>

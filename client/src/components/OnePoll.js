@@ -98,6 +98,7 @@ export default function OnePoll() {
                     </Link>
                     <br />
                     <br />
+                    <p>Contact us: <a href="mailto:pollmebaby@gmail.com" style={{ color: "#6495ED" }}>pollmebaby@gmail.com</a></p>
                     <p> &copy; PollMe made by Eran Dahan and Itai Brand</p>
                 </div>
             </div>

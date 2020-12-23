@@ -1,18 +1,17 @@
 import React, { useRef, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom'
 import { Alert } from "react-bootstrap"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Signin.css';
 import Logo from '../images/Logo.png';
 import { useAuth } from "../contexts/AuthContext.js"
 
-
 export default function Signin() {
+
     const emailRef = useRef()
     const passwordRef = useRef()
-    const { login } = useAuth()
+    const { login, currentUser } = useAuth()
     const [error, setError] = useState("")
-    const [loading, setLoading] = useState(false)
     const history = useHistory()
 
     async function handleSubmit(e) {
@@ -20,16 +19,14 @@ export default function Signin() {
 
         try {
             setError("")
-            setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
             history.push('/')
         } catch {
             setError("Failed to log in")
         }
-        setLoading(false)
     }
 
-    return (
+    return !currentUser ? (
         <div className="body">
             <form className="form-signin" onSubmit={handleSubmit}>
                 <img className="mb-4" src={Logo} alt="" width="200" height="200" />
@@ -42,12 +39,18 @@ export default function Signin() {
                 <div className="checkbox mb-3">
                     <label><input type="checkbox" value="remember-me" /> Remember me</label>
                 </div>
-                <button className="btn btn-lg btn-info btn-block" disabled={loading} type="submit">Sign in</button>
+                <button className="btn btn-lg btn-info btn-block" type="submit">Sign in</button>
                 <p className="mt-5 mb-3 text-muted">&copy;2020</p>
             </form>
             <div className="w-100 text-center mt-2">
-                Don't have an account yet? <Link to="/signup">Sign up</Link>
+                Don't have an account? <Link to="/signup">Sign Up</Link>
             </div>
+            <footer className="footer error-footer text-muted" >
+                <div className="container footer-container">
+                    <p>Contact us: <a href="mailto:pollmebaby@gmail.com" style={{ color: "#6495ED" }}>pollmebaby@gmail.com</a></p>
+                    <p> &copy; PollMe made by Eran Dahan and Itai Brand</p>
+                </div>
+            </footer>
         </div>
-    )
+    ) : <Redirect to='/' />
 }

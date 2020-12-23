@@ -11,6 +11,7 @@ import OnePoll from './components/OnePoll';
 import Dashboard from './components/Dashboard';
 import Error from './components/Error';
 import MyPolls from './components/MyPolls';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path='/poll/:id' exact component={OnePoll} />
             <PrivateRoute component={Error} />
           </Switch>
+          <Footer />
         </AuthProvider>
       </BrowserRouter>
     </div>

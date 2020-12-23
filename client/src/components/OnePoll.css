@@ -1,10 +1,9 @@
 .one-poll-body {
 	background-image: url("../images/jumbortonHomePage.png");
-	padding-bottom: 40%;
+	padding-bottom: 0%;
 	height: 100%;
 	min-height: 100vh;
 	padding-top: 2%;
-	padding-bottom: 2%;
 }
 
 .one-poll-img {

@@ -16,7 +16,7 @@ export default function Charts({ question }) {
     }, [])
 
     return (
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", height: "50%" }}>
             <ResponsiveContainer width="50%" height={250}>
                 <BarChart data={data}>
                     <CartesianGrid strokeDasharray="3 3" />

@@ -89,7 +89,8 @@ export default function NewPoll() {
                             return <NewPollOneQue index={index} inputs={inputs} setInputs={setInputs} removeQue={() => { removeQue(index) }} />
                         })}
                     </div>
-                    <a onClick={addQue}>Add Question</a>
+                    <a onClick={addQue} style={{ fontSize: "20px" }}>Add Question</a>
+                    <p style={{ color: "#5F9EA0" }}><b>For Open Questions remove all answers!</b></p>
                     <br />
                     <button onClick={generate} className="btn btn-info btn-md new-poll-btn">Generate</button>
                 </form>

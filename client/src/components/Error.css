@@ -1,7 +1,7 @@
 .error-body {
 	background-image: url("../images/jumbortonHomePage.png");
-	padding-bottom: 7%;
-	height: 100vh;
+	padding-bottom: 0%;
+	height: 90vh;
 	text-align: center;
 }
 
@@ -11,4 +11,7 @@
 
 .out {
 	color: black;
+}
+.error-message {
+	height: 75%;
 }

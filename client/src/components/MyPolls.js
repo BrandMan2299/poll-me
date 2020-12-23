@@ -33,21 +33,21 @@ export default function MyPolls() {
 
     return (
         <div className="one-poll-body">
-            <input class="form-control mr-sm-2 search-input" type="search" placeholder="Search Poll" aria-label="Search" onChange={onTextChange}></input>
+            <input className="form-control mr-sm-2 search-input" type="search" placeholder="Search Poll" aria-label="Search" onChange={onTextChange}></input>
             <div className="card my-poll-card" width="18rem;">
                 <div className="card-body">
                     <h2 style={{ textAlign: "center" }}>My Polls</h2>
-                    <div class="container">
-                        <div class="row">
+                    <div className="container">
+                        <div className="row">
                             {showed.map(pollPreview => {
                                 return (
-                                    <div class="col-sm">
+                                    <div className="col-sm">
                                         <div className="card mb-4 shadow-sm">
-                                            <div class="card-header">
+                                            <div className="card-header">
                                                 Created At: {new Date(pollPreview.date).toDateString()}
                                             </div>
                                             <div className="card-body last-poll-card">
-                                                <h5 class="card-title">{pollPreview.title}</h5>
+                                                <h5 className="card-title">{pollPreview.title}</h5>
                                                 <p className="card-text">{pollPreview.explanation}</p>
                                                 <div className="d-flex justify-content-between align-items-center">
                                                     <div className="btn-group">
@@ -57,7 +57,7 @@ export default function MyPolls() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-footer text-muted" style={{ fontSize: "75%", backgroundColor: "white" }}>
+                                            <div className="card-footer text-muted" style={{ fontSize: "75%", backgroundColor: "white" }}>
                                                 Public URL: {`http://localhost:3000/poll/${pollPreview._id}`}
                                             </div>
                                         </div>

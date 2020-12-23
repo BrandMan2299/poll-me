@@ -4,13 +4,13 @@ import { useAuth } from "../contexts/AuthContext";
 import './Signup.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from '../images/Logo.png';
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 
 export default function Signup() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { signup } = useAuth()
+    const { signup, currentUser } = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const history = useHistory()
@@ -33,12 +33,12 @@ export default function Signup() {
         setLoading(false)
     }
 
-    return (
+    return !currentUser ? (
         <div className="body">
             <form className="form-signin" onSubmit={handleSubmit} >
                 <img className="mb-4" src={Logo} alt="" width="200" height="200" />
+                <h1 className="h3 mb-3 font-weight-normal">Please Sign up</h1>
                 {error && <Alert variant="danger">{error}</Alert>}
-                <h1 className="h3 mb-3 font-weight-normal">Please sign un</h1>
                 <label htmlFor="inputEmail" className="sr-only">Email address</label>
                 <input type="email" id="inputEmail" ref={emailRef} className="form-control" placeholder="Email address" required autoFocus />
                 <label htmlFor="inputPassword" className="sr-only">Password</label>
@@ -54,6 +54,12 @@ export default function Signup() {
             <div className="w-100 text-center mt-2">
                 Already have an account? <Link to="/signin">Sign In</Link>
             </div>
+            <footer className="footer error-footer text-muted">
+                <div className="container footer-container">
+                    <p>Contact us: <a href="mailto:pollmebaby@gmail.com" style={{ color: "#6495ED" }}>pollmebaby@gmail.com</a></p>
+                    <p> &copy; PollMe made by Eran Dahan and Itai Brand</p>
+                </div>
+            </footer>
         </div>
-    )
+    ) : <Redirect to='/' />
 }

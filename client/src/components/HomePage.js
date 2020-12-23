@@ -17,7 +17,6 @@ export default function HomePage() {
                 creator: currentUser.email
             })
             setLastPolls(data)
-            console.log(data);
         })()
     }, [])
 
@@ -35,18 +34,18 @@ export default function HomePage() {
                     </Link>
                 </p>
             </div>
-            <div className="container">
+            <div className="container" style={{ minHeight: "30vh" }}>
                 <h3 className="popularHeader">My Last Polls</h3>
                 <div className="row">
                     {lastPolls.map(pollPreview => {
                         return (
                             <div className="col-md-4">
                                 <div className="card mb-4 shadow-sm">
-                                    <div class="card-header">
+                                    <div className="card-header">
                                         Created At: {new Date(pollPreview.date).toDateString()}
                                     </div>
                                     <div className="card-body last-poll-card">
-                                        <h5 class="card-title">{pollPreview.title}</h5>
+                                        <h5 className="card-title">{pollPreview.title}</h5>
                                         <p className="card-text">{pollPreview.explanation}</p>
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div className="btn-group">
@@ -56,7 +55,7 @@ export default function HomePage() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer text-muted" style={{ fontSize: "75%", backgroundColor: "white" }}>
+                                    <div className="card-footer text-muted" style={{ fontSize: "75%", backgroundColor: "white" }}>
                                         Public URL: {`http://localhost:3000/poll/${pollPreview._id}`}
                                     </div>
                                 </div>
@@ -65,11 +64,6 @@ export default function HomePage() {
                     })}
                 </div>
             </div>
-            <footer className="footer text-muted">
-                <div className="container footer-container">
-                    <p> &copy; PollMe made by Eran Dahan and Itai Brand</p>
-                </div>
-            </footer>
         </div>
     ) : <></>
 }
