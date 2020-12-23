@@ -19,7 +19,7 @@ export default function MyPolls() {
             })
             setLastPolls(data)
         })()
-    }, [])
+    }, [currentUser])
 
     useEffect(() => {
         setShowed(lastPolls.filter((poll) => {
@@ -39,9 +39,9 @@ export default function MyPolls() {
                     <h2 style={{ textAlign: "center" }}>My Polls</h2>
                     <div className="container">
                         <div className="row">
-                            {showed.map(pollPreview => {
+                            {showed.map((pollPreview, key) => {
                                 return (
-                                    <div className="col-sm">
+                                    <div className="col-sm" key={key}>
                                         <div className="card mb-4 shadow-sm">
                                             <div className="card-header">
                                                 Created At: {new Date(pollPreview.date).toDateString()}

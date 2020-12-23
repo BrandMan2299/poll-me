@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Modal } from 'react-bootstrap';
 import './NewPoll.css'
@@ -9,7 +9,7 @@ import axios from 'axios';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export default function NewPoll() {
-    const [inputs, setInputs] = useState([]);
+    const [inputs, setInputs] = useState([{ question: "", answer1: "", answer2: "", answer3: "", answer4: "" }]);
     const [show, setShow] = useState(false);
     const [url, setUrl] = useState();
     const history = useHistory();
@@ -48,10 +48,6 @@ export default function NewPoll() {
         setInputs(newInputs);
     }
 
-    useEffect(() => {
-        addQue()
-    }, [])
-
     const generate = async () => {
         const finalInput = inputs.slice();
         finalInput.forEach(question => {
@@ -86,10 +82,10 @@ export default function NewPoll() {
                 <form onSubmit={handleSubmit} className="form-questions">
                     <div id="answersSection" >
                         {inputs.map((a, index) => {
-                            return <NewPollOneQue index={index} inputs={inputs} setInputs={setInputs} removeQue={() => { removeQue(index) }} />
+                            return <NewPollOneQue key={index} index={index} inputs={inputs} setInputs={setInputs} removeQue={() => { removeQue(index) }} />
                         })}
                     </div>
-                    <a onClick={addQue} style={{ fontSize: "20px" }}>Add Question</a>
+                    <div onClick={addQue} style={{ fontSize: "20px", cursor: "pointer" }} >Add Question</div>
                     <p style={{ color: "#5F9EA0" }}><b>For Open Questions remove all answers!</b></p>
                     <br />
                     <button onClick={generate} className="btn btn-info btn-md new-poll-btn">Generate</button>

@@ -11,7 +11,7 @@ export default function Error() {
                 <h3 className="error-header">404 PAGE</h3>
                 <br />
                 <Link className="error-link" to="/">
-                    <img src={Logo}></img>
+                    <img src={Logo} alt="Logo was suposed to be here"></img>
                     <h1 className="out">Out</h1>
                 </Link>
             </div>

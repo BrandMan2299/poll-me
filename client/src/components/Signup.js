@@ -40,11 +40,11 @@ export default function Signup() {
                 <h1 className="h3 mb-3 font-weight-normal">Please Sign up</h1>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <label htmlFor="inputEmail" className="sr-only">Email address</label>
-                <input type="email" id="inputEmail" ref={emailRef} className="form-control" placeholder="Email address" required autoFocus />
+                <input type="email" id="inputEmail" ref={emailRef} className="form-control" placeholder="Email address" required autoFocus autoComplete="off" />
                 <label htmlFor="inputPassword" className="sr-only">Password</label>
-                <input type="password" id="inputPassword" ref={passwordRef} className="form-control" placeholder="Password" required />
+                <input type="password" id="inputPassword" ref={passwordRef} className="form-control" placeholder="Password" required autoComplete="off" />
                 <label htmlFor="inputConfirmPassword" className="sr-only">Password Confirmation</label>
-                <input type="password" id="inputConfirmPassword" ref={passwordConfirmRef} className="form-control" placeholder="Confirm Password" required />
+                <input type="password" id="inputConfirmPassword" ref={passwordConfirmRef} className="form-control" placeholder="Confirm Password" required autoComplete="off" />
                 <div className="checkbox mb-3">
                     <label><input type="checkbox" value="remember-me" /> Remember me</label>
                 </div>

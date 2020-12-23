@@ -33,9 +33,9 @@ export default function Signin() {
                 <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <label htmlFor="inputEmail" className="sr-only">Email address</label>
-                <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus ref={emailRef} />
+                <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus ref={emailRef} autoComplete="off" />
                 <label htmlFor="inputPassword" className="sr-only">Password</label>
-                <input type="password" id="inputPassword" className="form-control" placeholder="Password" required ref={passwordRef} />
+                <input type="password" id="inputPassword" className="form-control" placeholder="Password" required ref={passwordRef} autoComplete="off" />
                 <div className="checkbox mb-3">
                     <label><input type="checkbox" value="remember-me" /> Remember me</label>
                 </div>

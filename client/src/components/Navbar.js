@@ -36,7 +36,7 @@ export default function Navbar() {
                         </ul>
                     </div>
                 </div>
-                <a onClick={handleLogout}>Log Out</a>
+                <div className="log-out" onClick={handleLogout}>Log Out</div>
             </nav>
         </div>
     ) : <></>

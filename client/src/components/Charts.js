@@ -13,7 +13,7 @@ export default function Charts({ question }) {
             }
         })
         setData(array);
-    }, [])
+    }, [question])
 
     return (
         <div style={{ display: "flex", height: "50%" }}>

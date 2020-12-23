@@ -52,7 +52,7 @@ export default function NewPollOneQue(prop) {
             <div className="container answers">
                 <div className="row">
                     {answers.map((a, index) =>
-                        <div className="col-3">
+                        <div className="col-3" key={'a' + index}>
                             <div className="input-group mb-3">
                                 <div className="input-group-prepend">
                                     <BsDashSquare cursor="pointer" color="#5F9EA0" fontSize="0.9rem" style={{ marginTop: "10px", marginRight: "3px" }} onClick={() => removeAns(index)} />

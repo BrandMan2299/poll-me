@@ -18,7 +18,7 @@ export default function HomePage() {
             })
             setLastPolls(data)
         })()
-    }, [])
+    }, [currentUser])
 
     return lastPolls ? (
         <div className="homePage-body">
@@ -37,9 +37,9 @@ export default function HomePage() {
             <div className="container" style={{ minHeight: "30vh" }}>
                 <h3 className="popularHeader">My Last Polls</h3>
                 <div className="row">
-                    {lastPolls.map(pollPreview => {
+                    {lastPolls.map((pollPreview, key) => {
                         return (
-                            <div className="col-md-4">
+                            <div className="col-md-4" key={key}>
                                 <div className="card mb-4 shadow-sm">
                                     <div className="card-header">
                                         Created At: {new Date(pollPreview.date).toDateString()}
