@@ -36,6 +36,13 @@ export default function Dashboard() {
         return () => { clearInterval(interval) }
     }, [currentUser, id, results])
 
+    const containsHeb = (str) => {
+        if ((/[\u0590-\u05FF]/).test(str)) {
+            return 'rtl'
+        }
+        return 'ltr';
+    }
+
     return results ? (
         !results.error ? (
             <div className="dashboard-body">
@@ -47,7 +54,7 @@ export default function Dashboard() {
                             <h6>{results.explanation}</h6>
                             {results && results.questions.map((q, index) => {
                                 return (
-                                    <div className="container answers preview-container" key={index}>
+                                    <div className="container answers preview-container" key={index} style={{ direction: containsHeb(q.question) }}>
                                         <span className="input-group-text" id="basic-addon1">{index + 1}. {q.question}</span>
                                         <label ></label><br />
                                         <div className="row">
@@ -81,7 +88,7 @@ export default function Dashboard() {
                                             <Carousel.Item style={{ minHeight: "291px" }} key={key + 'q'}>
                                                 <div className="container answers preview-container" style={{ marginLeft: "50px" }}>
                                                     <h3 className="carousel-header" style={{ marginTop: "10px" }}>Question: {q.question}</h3>
-                                                    <ul>
+                                                    <ul className="open-list">
                                                         {q.openReplies.map((answer, key) => {
                                                             return (
                                                                 <li key={'k' + key}>{answer}</li>

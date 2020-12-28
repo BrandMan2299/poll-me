@@ -12,6 +12,7 @@ import Dashboard from './components/Dashboard';
 import Error from './components/Error';
 import MyPolls from './components/MyPolls';
 import Footer from './components/Footer';
+import ForgotPassword from './components/ForgotPassword';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path='/signup' exact component={Signup} />
             <Route path='/signin' exact component={Signin} />
             <Route path='/poll/:id' exact component={OnePoll} />
+            <Route path='/forgotpassword' exact component={ForgotPassword} />
             <PrivateRoute component={Error} />
           </Switch>
           <Footer />

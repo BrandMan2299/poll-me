@@ -19,25 +19,17 @@ export default function Navbar() {
     }
 
     return currentUser ? (
-        <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <Link to='/'>
-                    <img className='logo' src={Logo} alt='' width='70px' />
-                </Link>
-                <div className="container-fluid">
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav">
-                            <Link className="nav-link" to="/newpoll">
-                                <li className="nav-item">New Poll</li>
-                            </Link>
-                            <Link className="nav-link" to="/mypolls">
-                                <li className="nav-item">My Polls</li>
-                            </Link>
-                        </ul>
-                    </div>
-                </div>
-                <div className="log-out" onClick={handleLogout}>Log Out</div>
-            </nav>
+        <div className="nav">
+            <Link to='/'>
+                <img className='logo' src={Logo} alt='' width='70px' />
+            </Link>
+            <label id="label" htmlFor="toggle">&#9776;</label>
+            <input type="checkbox" id="toggle" />
+            <div className="menu">
+                <Link to='/newpoll'>New Poll</Link>
+                <Link to='/mypolls'>My Polls</Link>
+                <Link onClick={handleLogout}>Log Out</Link>
+            </div>
         </div>
     ) : <></>
 }

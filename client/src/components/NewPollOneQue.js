@@ -38,7 +38,7 @@ export default function NewPollOneQue(prop) {
         newInputs[prop.index].question = question;
         answers.forEach((string, i) => {
             newInputs[prop.index][`answer${i + 1}`] = string;
-        });
+        })
         for (let i = answers.length; i < 4; i++) {
             newInputs[prop.index][`answer${i + 1}`] = "";
         }
@@ -47,24 +47,24 @@ export default function NewPollOneQue(prop) {
 
     return (
         <div className="form-group">
-            <label htmlFor="question">question number {prop.index + 1}</label><BsTrash cursor="pointer" onClick={prop.removeQue} />
-            <input type="text" name="question" value={prop.inputs[prop.index].question} onChange={e => setQuestion(capitalizeFirstLetter(e.target.value))} className="form-control" id="exampleFormControlInput1" placeholder="Insert Question" />
+            <label htmlFor="question" id="quesnum">question number {prop.index + 1}</label><BsTrash cursor="pointer" onClick={prop.removeQue} />
+            <input type="text" autoComplete="off" name="question" value={prop.inputs[prop.index].question} onChange={e => setQuestion(capitalizeFirstLetter(e.target.value))} className="form-control" id="exampleFormControlInput1" placeholder="Insert Question" />
             <div className="container answers">
-                <div className="row">
+                <div className="row row-cols-2">
                     {answers.map((a, index) =>
-                        <div className="col-3" key={'a' + index}>
-                            <div className="input-group mb-3">
+                        <div id="answerArea" key={'a' + index} className="col" >
+                            <div className="input-group mb-3" >
                                 <div className="input-group-prepend">
-                                    <BsDashSquare cursor="pointer" color="#5F9EA0" fontSize="0.9rem" style={{ marginTop: "10px", marginRight: "3px" }} onClick={() => removeAns(index)} />
+                                    <BsDashSquare color="#5F9EA0" cursor="pointer" fontSize="0.9rem" style={{ marginTop: "10px", marginRight: "3px" }} onClick={() => removeAns(index)} />
                                     <span className="input-group-text" id="basic-addon1">{index + 1}</span>
                                 </div>
-                                <input type="text" name={`${index}`} value={prop.inputs[prop.index][`answer${index + 1}`]} onChange={typing} className="form-control" placeholder="Answer" aria-label="Username" aria-describedby="basic-addon1" />
+                                <input id="answerInput" type="text" name={`${index}`} autoComplete="off" value={prop.inputs[prop.index][`answer${index + 1}`]} onChange={typing} className="form-control answer-input" placeholder="Answer" aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
                         </div>
                     )}
                 </div>
                 <div className="plus-icon" style={{ textAlign: "end" }}>
-                    <span>Add Answer</span><BsPlus cursor="pointer" color="green" onClick={addAns} />
+                    <span>Add Answer</span><BsPlus color="green" cursor="pointer" onClick={addAns} />
                 </div>
             </div>
         </div>

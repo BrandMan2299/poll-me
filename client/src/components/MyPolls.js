@@ -14,7 +14,7 @@ export default function MyPolls() {
 
     useEffect(() => {
         (async () => {
-            const { data } = await axios.post(`/api/user/history/all`, {
+            const { data } = await axios.post(`https://poll-me-5e9f0.oa.r.appspot.com/api/user/history/all`, {
                 creator: currentUser.email
             })
             setLastPolls(data)
@@ -32,16 +32,16 @@ export default function MyPolls() {
     }
 
     return (
-        <div className="one-poll-body">
-            <input className="form-control mr-sm-2 search-input" type="search" placeholder="Search Poll" aria-label="Search" onChange={onTextChange}></input>
-            <div className="card my-poll-card" width="18rem;">
+        <div id="myPollsBody" className="one-poll-body">
+            <input id="searchInput" className="form-control mr-sm-2 search-input" type="search" placeholder="Search Poll" aria-label="Search" onChange={onTextChange}></input>
+            <div id="mainCard" className="card my-poll-card" width="18rem;">
                 <div className="card-body">
-                    <h2 style={{ textAlign: "center" }}>My Polls</h2>
+                    <h2 id="myPollsHeader" style={{ textAlign: "center" }}>My Polls</h2>
                     <div className="container">
                         <div className="row">
                             {showed.map((pollPreview, key) => {
                                 return (
-                                    <div className="col-sm" key={key}>
+                                    <div id="myPollCard" key={key} className="col-sm">
                                         <div className="card mb-4 shadow-sm">
                                             <div className="card-header">
                                                 Created At: {new Date(pollPreview.date).toDateString()}
@@ -58,7 +58,7 @@ export default function MyPolls() {
                                                 </div>
                                             </div>
                                             <div className="card-footer text-muted" style={{ fontSize: "75%", backgroundColor: "white" }}>
-                                                Public URL: {`http://localhost:3000/poll/${pollPreview._id}`}
+                                                Public URL: {`https://pollmebaby.com/poll/${pollPreview._id}`}
                                             </div>
                                         </div>
                                     </div>

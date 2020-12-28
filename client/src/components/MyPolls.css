@@ -17,3 +17,23 @@
 .card-body {
 	margin: auto;
 }
+
+@media (max-width: 600px) {
+	#mainCard {
+		width: 90%;
+	}
+	#myPollsBody {
+		text-align: center;
+		width: 100%;
+	}
+	#myPollsHeader {
+		padding-right: 20%;
+	}
+	#searchInput {
+		width: 80%;
+		margin-left: 10%;
+	}
+	#myPollCard {
+		width: 80%;
+	}
+}

@@ -64,14 +64,14 @@ export default function NewPoll() {
             questions: finalInput,
             date: new Date()
         }
-        const { data } = await axios.post("/api/polls", poll);
+        const { data } = await axios.post("https://poll-me-5e9f0.oa.r.appspot.com/api/polls", poll);
         setUrl(data)
         handleShow()
     }
 
     return (
         <div className="new-poll-body">
-            <div className="card new-poll-card" width="18rem;">
+            <div id="newPollCard" className="card new-poll-card" width="18rem;">
                 <div className="card-body">
                     <h2 htmlFor="header">Poll Name</h2>
                     <textarea className="poll-name" ref={pollName} placeholder="Insert Poll Name" />
@@ -85,18 +85,18 @@ export default function NewPoll() {
                             return <NewPollOneQue key={index} index={index} inputs={inputs} setInputs={setInputs} removeQue={() => { removeQue(index) }} />
                         })}
                     </div>
-                    <div onClick={addQue} style={{ fontSize: "20px", cursor: "pointer" }} >Add Question</div>
+                    <div onClick={addQue} style={{ fontSize: "20px", cursor: "pointer" }}>Add Question</div>
                     <p style={{ color: "#5F9EA0" }}><b>For Open Questions remove all answers!</b></p>
                     <br />
-                    <button onClick={generate} className="btn btn-info btn-md new-poll-btn">Generate</button>
+                    <button id="generateButton" onClick={generate} className="btn btn-info btn-md new-poll-btn">Generate</button>
                 </form>
             </div>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Poll URL</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Woohoo, you're poll URL is {`http://localhost:3000/poll/${url}`}</Modal.Body>
-                <CopyToClipboard text={`http://localhost:3000/poll/${url}`}>
+                <Modal.Body>Woohoo, you're poll URL is {`https://pollmebaby.com/poll/${url}`}</Modal.Body>
+                <CopyToClipboard text={`https://pollmebaby.com/poll/${url}`}>
                     <Button variant="light" onClick={e => e.target.innerText = "Copied!"}>Copy</Button>
                 </CopyToClipboard>
                 <Modal.Footer>
@@ -107,6 +107,7 @@ export default function NewPoll() {
                     </Link>
                 </Modal.Footer>
             </Modal>
+
         </div>
     )
 }

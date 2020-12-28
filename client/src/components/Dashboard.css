@@ -91,6 +91,10 @@
 .preview-container {
 	width: 90%;
 }
+.open-list{
+	overflow-y: scroll;
+	max-height: 250px;
+}
 
 .recharts-legend-item {
 	padding-top: 2%;

@@ -5,6 +5,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import './OnePoll.css';
 import Logo from '../images/Logo.png';
+import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 
 export default function OnePoll() {
@@ -13,6 +14,7 @@ export default function OnePoll() {
     const [modalBody, setModalBody] = useState("");
     const { id } = useParams();
     const [inputs, setInputs] = useState([]);
+    const { currentUser } = useAuth();
 
     const handleShow = () => { setShow(true) };
     const handleClose = () => {
@@ -32,7 +34,7 @@ export default function OnePoll() {
 
     const submit = async () => {
         if (inputs.length === onePoll.questions.length && !inputs.includes(undefined)) {
-            await axios.post(`/api/polls/${id}`, inputs);
+            await axios.post(`https://poll-me-5e9f0.oa.r.appspot.com/api/polls/${id}`, inputs);
             setModalBody("Great Job! Thank you for your input!");
             localStorage.setItem(`fulfill-${onePoll._id}`, "true");
             handleShow()
@@ -45,7 +47,7 @@ export default function OnePoll() {
 
     useEffect(() => {
         (async () => {
-            const { data } = await axios.get(`/api/polls/${id}`);
+            const { data } = await axios.get(`https://poll-me-5e9f0.oa.r.appspot.com/api/polls/${id}`);
             setOnePoll(data);
             if (localStorage[`fulfill-${id}`] === "true") {
                 setModalBody("You Can't fill out the Poll twice!");
@@ -54,10 +56,17 @@ export default function OnePoll() {
         })()
     }, [id])
 
+    const containsHeb = (str) => {
+        if ((/[\u0590-\u05FF]/).test(str)) {
+            return 'rtl'
+        }
+        return 'ltr';
+    }
+
     return onePoll && localStorage.fulfill === undefined ? (
         <div>
             <div className="one-poll-body">
-                <div className="card new-poll-card" width="18rem;">
+                <div id="onePollCard" className="card new-poll-card" width="18rem;">
                     <div className="card-body">
                         <h2 className="titleHeader" htmlFor="header">{onePoll.title}</h2>
                         <br />
@@ -66,7 +75,7 @@ export default function OnePoll() {
                     <div className="form-questions">
                         {onePoll.questions.map((question, index) => {
                             return (
-                                <div className="container answers" key={index}>
+                                <div key={index} className="container answers" style={{ direction: containsHeb(question.question) }}>
                                     <span className="input-group-text" id="basic-addon1">{index + 1}. {question.question}</span>
                                     <label ></label><br />
                                     <div className="row">
@@ -92,9 +101,9 @@ export default function OnePoll() {
                         <h5>Created by: {onePoll.creator}</h5>
                         <br />
                     </div>
-                    <button className="btn btn-info btn-md send-button" onClick={submit}>Send!</button>
+                    <button id="sendButton" className="btn btn-info btn-md send-button" onClick={submit}>Send!</button>
                 </div>
-                <div className="container footer-container">
+                {!currentUser ? <div className="container footer-container">
                     <Link to='/'>
                         <img className='one-pool' src={Logo} alt='' width='70px' />
                     </Link>
@@ -102,7 +111,7 @@ export default function OnePoll() {
                     <br />
                     <p>Contact us: <a href="mailto:pollmebaby@gmail.com" style={{ color: "#6495ED" }}>pollmebaby@gmail.com</a></p>
                     <p> &copy; PollMe made by Eran Dahan and Itai Brand</p>
-                </div>
+                </div> : <></>}
             </div>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
