@@ -79,7 +79,7 @@ export default function Dashboard() {
                                     if (q.answer1 !== "") {
                                         return (
                                             <Carousel.Item key={key + 'q'}>
-                                                <h3 className="carousel-header" style={{ marginTop: "10px" }}>Question: {q.question}</h3>
+                                                <h3 className="carousel-header" style={{ marginTop: "10px" }}>Question {key + 1}: {q.question}</h3>
                                                 <Charts question={q} />
                                             </Carousel.Item>
                                         )
@@ -87,7 +87,7 @@ export default function Dashboard() {
                                         return (
                                             <Carousel.Item style={{ minHeight: "291px" }} key={key + 'q'}>
                                                 <div className="container answers preview-container" style={{ marginLeft: "50px" }}>
-                                                    <h3 className="carousel-header" style={{ marginTop: "10px" }}>Question: {q.question}</h3>
+                                                    <h3 className="carousel-header" style={{ marginTop: "10px" }}>Question {key + 1}: {q.question}</h3>
                                                     <ul className="open-list">
                                                         {q.openReplies.map((answer, key) => {
                                                             return (

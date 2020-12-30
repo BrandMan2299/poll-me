@@ -41,7 +41,7 @@
 	grid-area: preview;
 	height: 100%;
 	text-align: center;
-	overflow-y: scroll;
+	overflow-y: auto;
 	position: relative;
 }
 .carusela {
@@ -61,6 +61,11 @@
 	outline: black;
 	border-radius: 50%;
 	background-image: none;
+}
+
+#basic-addon1 {
+	white-space: normal;
+	text-align: left;
 }
 
 .carousel-control-next-icon:after {
@@ -91,6 +96,7 @@
 .preview-container {
 	width: 90%;
 }
+
 .open-list{
 	overflow-y: scroll;
 	max-height: 250px;
